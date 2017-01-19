@@ -119,6 +119,9 @@ function manyToManyDescriptor(
                 includes(toIds, attrs[qsFromModel.idAttribute])
             );
 
+            qs.otherIdFieldName = reverse ? fromFieldName : toFieldName;
+            qs.ownIdFieldName = reverse ? toFieldName : fromFieldName;
+
             qs.add = function add(...args) {
                 const idsToAdd = args.map(normalizeEntity);
 
