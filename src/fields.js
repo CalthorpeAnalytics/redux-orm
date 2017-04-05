@@ -163,6 +163,7 @@ export const ManyToMany = class ManyToMany extends RelationalField {
             to: toModel.modelName,
             relatedName: fieldName,
             through: this.through,
+            throughFields: this.throughFields,
         });
 
         // Backwards.

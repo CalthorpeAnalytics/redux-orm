@@ -123,7 +123,8 @@ describe('QuerySet tests', () => {
             Book,
             Genre,
             Cover,
-            Author,
+          Author,
+          AuthorThrough,
             Publisher,
         } = createTestModels();
 
@@ -138,7 +139,7 @@ describe('QuerySet tests', () => {
         Book.querySetClass = CustomQuerySet;
 
         const orm = new ORM();
-        orm.register(Book, Genre, Cover, Author, Publisher);
+        orm.register(Book, Genre, Cover, Author, AuthorThrough, Publisher);
         const { session: sess } = createTestSessionWithData(orm);
 
         const customQs = sess.Book.getQuerySet();
