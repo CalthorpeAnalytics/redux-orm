@@ -20,6 +20,7 @@ describe('Session', () => {
     let Cover;
     let Genre;
     let Author;
+    let AuthorThrough;
     let Publisher;
     let emptyState;
     beforeEach(() => {
@@ -28,10 +29,11 @@ describe('Session', () => {
             Cover,
             Genre,
             Author,
+            AuthorThrough,
             Publisher,
         } = createTestModels());
         orm = new ORM();
-        orm.register(Book, Cover, Genre, Author, Publisher);
+        orm.register(Book, Cover, Genre, AuthorThrough, Author, Publisher);
         emptyState = orm.getEmptyState();
     });
 
@@ -111,7 +113,7 @@ describe('Session', () => {
         const firstSession = orm.session(emptyState);
         const secondSession = orm.session(otherState);
 
-        expect(firstSession.sessionBoundModels).to.have.lengthOf(6);
+        expect(firstSession.sessionBoundModels).to.have.lengthOf(7);
 
         expect(firstSession.Book).not.to.equal(secondSession.Book);
         expect(firstSession.Author).not.to.equal(secondSession.Author);

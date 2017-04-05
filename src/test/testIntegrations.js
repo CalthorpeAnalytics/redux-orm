@@ -31,7 +31,7 @@ describe('Integration', () => {
 
         it('Initial data bootstrapping results in a correct state', () => {
             expect(state).to.have.all.keys(
-                'Book', 'Cover', 'Genre', 'Author', 'BookGenres', 'Publisher');
+                'Book', 'Cover', 'Genre', 'Author', 'AuthorThrough', 'BookGenres', 'Publisher');
 
             expect(state.Book.items).to.have.length(3);
             expect(Object.keys(state.Book.itemsById)).to.have.length(3);
@@ -161,6 +161,17 @@ describe('Integration', () => {
             expect(relatedAuthors).to.be.an.instanceOf(QuerySet);
             expect(relatedAuthors.modelClass).to.equal(Author);
             expect(relatedAuthors.count()).to.equal(2);
+        });
+
+        it('many-to-many relationship descriptors for recursive models', () => {
+            const {
+              Author,
+            } = session;
+
+            const authorParent = Author.create({ name: 'Jerry Stiller' });
+            const authorChild = Author.create({ name: 'Ben Stiller' });
+            authorChild.parents.add(authorParent);
+            expect(authorParent.children.count()).to.equal(1);
         });
 
         it('adding related many-to-many entities works', () => {

@@ -101,6 +101,16 @@ export function createTestModels() {
 
     Book.modelName = 'Book';
 
+    const AuthorThrough = class AuthorThroughModel extends Model {
+        static get fields() {
+            return {
+        /* parent: fk('Author'),
+         * child: fk('Author', 'children'),*/
+            };
+        }
+  };
+    AuthorThrough.modelName = 'AuthorThrough';
+
     const Author = class AuthorModel extends Model {
         static get fields() {
             return {
@@ -110,6 +120,12 @@ export function createTestModels() {
                     to: 'Publisher',
                     through: 'Book',
                     relatedName: 'authors',
+                }),
+                parents: many({
+                    to: 'Author',
+                    relatedName: 'children',
+                    through: 'AuthorThrough',
+                    throughFields: ['parent', 'child'],
                 }),
             };
         }
@@ -140,6 +156,7 @@ export function createTestModels() {
     return {
         Book,
         Author,
+        AuthorThrough,
         Cover,
         Genre,
         Publisher,
@@ -153,11 +170,12 @@ export function createTestORM(customModels) {
         Author,
         Cover,
         Genre,
-        Publisher,
+      Publisher,
+      AuthorThrough,
     } = models;
 
     const orm = new ORM();
-    orm.register(Book, Author, Cover, Genre, Publisher);
+    orm.register(Book, AuthorThrough, Author, Cover, Genre, Publisher);
     return orm;
 }
 

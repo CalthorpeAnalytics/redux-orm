@@ -72,12 +72,14 @@ describe('ORM', () => {
         let orm;
         let Book;
         let Author;
+        let AuthorThrough;
         let Cover;
         let Genre;
         let Publisher;
         beforeEach(() => {
             ({
                 Book,
+                AuthorThrough,
                 Author,
                 Cover,
                 Genre,
@@ -114,7 +116,7 @@ describe('ORM', () => {
         });
 
         it('correctly sets model prototypes', () => {
-            orm.register(Book, Author, Cover, Genre, Publisher);
+            orm.register(Book, Author, AuthorThrough, Cover, Genre, Publisher);
             expect(Book.isSetUp).to.not.be.ok;
 
             let coverDescriptor = Object.getOwnPropertyDescriptor(
@@ -174,7 +176,7 @@ describe('ORM', () => {
         });
 
         it('correctly gets the default state', () => {
-            orm.register(Book, Author, Cover, Genre, Publisher);
+            orm.register(Book, Author, AuthorThrough, Cover, Genre, Publisher);
             const defaultState = orm.getEmptyState();
 
             expect(defaultState).to.deep.equal({
@@ -189,6 +191,11 @@ describe('ORM', () => {
                     meta: {},
                 },
                 Author: {
+                    items: [],
+                    itemsById: {},
+                    meta: {},
+                },
+                AuthorThrough: {
                     items: [],
                     itemsById: {},
                     meta: {},
@@ -212,7 +219,7 @@ describe('ORM', () => {
         });
 
         it('correctly starts a mutating session', () => {
-            orm.register(Book, Author, Cover, Genre, Publisher);
+            orm.register(Book, Author, AuthorThrough, Cover, Genre, Publisher);
             const initialState = orm.getEmptyState();
             const session = orm.mutableSession(initialState);
             expect(session).to.be.an.instanceOf(Session);

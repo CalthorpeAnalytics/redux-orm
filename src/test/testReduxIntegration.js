@@ -22,6 +22,7 @@ describe('Redux integration', () => {
     let Cover;
     let Genre;
     let Author;
+    let AuthorThrough;
     let Publisher;
     let defaultState;
     beforeEach(() => {
@@ -29,11 +30,12 @@ describe('Redux integration', () => {
             Book,
             Cover,
             Genre,
-            Author,
+          Author,
+          AuthorThrough,
             Publisher,
         } = createTestModels());
         orm = new ORM();
-        orm.register(Book, Cover, Genre, Author, Publisher);
+        orm.register(Book, Cover, Genre, Author, AuthorThrough, Publisher);
         defaultState = orm.getEmptyState();
     });
 
